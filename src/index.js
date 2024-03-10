@@ -4,6 +4,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const blogRouter = require("./routes/blogRouter.js");
+const userRouter = require("./routes/userRouter.js");
 const PORT = process.env.PORT | 5000
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/blogs", blogRouter);
+app.use("/users", userRouter);
 
 app.use("/*", (req, res) => {
     res.status(404).json({
