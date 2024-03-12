@@ -1,5 +1,20 @@
 const mongoose = require("mongoose");
 
+const commentSchema = new mongoose.Schema({
+    text: {
+        type: String,
+        required: true
+    },
+    user: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
 const blogSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -12,7 +27,12 @@ const blogSchema = new mongoose.Schema({
     image: {
         type: String,
         required: false
-    }
+    },
+    // likes: {
+    //     type: Number,
+    //     default: 0
+    // },
+    // comments: [commentSchema]
 });
 
 const Blog = mongoose.model("Blog", blogSchema);

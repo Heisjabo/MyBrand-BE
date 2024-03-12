@@ -1,10 +1,10 @@
-const Blog = require("../models/blog");
 const uploadFile = require("../helpers/cloud");
+const { getBlog, newBlog, getSingleBlog, deleteBlogById } = require("../services/blogService");
 
 const createBlog = async (req, res) => {
     try{
         const result = await uploadFile(req.file, res);
-        const newBlog = await Blog.create({
+        const blog = await newBlog({
             title: req.body.title,
             description: req.body.description,
             image: result.secure_url
@@ -12,7 +12,7 @@ const createBlog = async (req, res) => {
         res.status(200).json({
             status: "success",
             message: "blog was created successfully!",
-            data: newBlog
+            data: blog
         })
     } catch(err){
         res.status(400).json({
@@ -25,7 +25,7 @@ const createBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
     try{
-        const blogs = await Blog.find();
+        const blogs = await getBlog();
         res.status(200).json({
             status: "success",
             data: blogs
@@ -39,8 +39,9 @@ const getBlogs = async (req, res) => {
 }
 
 const getBlogById = async (req, res) => {
+    const id = req.params.id;
     try{
-        const blog = await Blog.findById(req.params.id);
+        const blog = await getSingleBlog(id);
         if(!blog){
             return res.status(404).json({
                 status: "error",
@@ -62,7 +63,7 @@ const getBlogById = async (req, res) => {
 const deleteBlog = async (req, res) => {
     const id = req.params.id;
     try {
-      const blog = await Blog.findByIdAndDelete(id);
+      const blog = await deleteBlogById(id);
       if (!blog) {
         return res.status(404).json({
           status: "failed",
@@ -83,7 +84,7 @@ const deleteBlog = async (req, res) => {
 
 const updateBlog = async (req, res) => {
     try {
-        const blog = await Blog.findById(req.params.id)
+        const blog = await getSingleBlog(req.params.id)
         if(!blog){
             res.status(404).json({
                 status: "error",

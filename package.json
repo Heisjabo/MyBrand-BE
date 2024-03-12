@@ -2,10 +2,10 @@
   "name": "mybrand-be",
   "version": "1.0.0",
   "description": "MyBrand-BE serves as the backend for the MyBrand project. It handles the server-side logic and database operations using Node.js and Express. MongoDB is utilized as the database to store and manage data related to the project.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
