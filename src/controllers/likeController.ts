@@ -31,13 +31,17 @@ export const getLikes = async (req: Request, res: Response) => {
 }
 
 
-// export const removeLike = async (req: Request, res: Response) => {
-//     try{
-//         const like = await dislike(req.params.likeId);
-//     } catch(err: any){
-//         res.status(400).json({
-//             status: "Error",
-//             message: err.message
-//         })
-//     }
-// }
+export const removeLike = async (req: Request, res: Response) => {
+    try{
+        const like = await dislike(req.params.likeId);
+        res.status(200).json({
+          status: "success",
+          message: "your like was removed!"
+        })
+    } catch(err: any){
+        res.status(400).json({
+            status: "Error",
+            message: err.message
+        })
+    }
+}

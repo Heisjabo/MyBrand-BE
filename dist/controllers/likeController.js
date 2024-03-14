@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLikes = exports.like = void 0;
+exports.removeLike = exports.getLikes = exports.like = void 0;
 const blogService_1 = require("../services/blogService");
 const likeService_1 = require("../services/likeService");
 const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,13 +42,19 @@ const getLikes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getLikes = getLikes;
-// export const removeLike = async (req: Request, res: Response) => {
-//     try{
-//         const like = await dislike(req.params.likeId);
-//     } catch(err: any){
-//         res.status(400).json({
-//             status: "Error",
-//             message: err.message
-//         })
-//     }
-// }
+const removeLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const like = yield (0, likeService_1.dislike)(req.params.likeId);
+        res.status(200).json({
+            status: "success",
+            message: "your like was removed!"
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            status: "Error",
+            message: err.message
+        });
+    }
+});
+exports.removeLike = removeLike;

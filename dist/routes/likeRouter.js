@@ -8,4 +8,5 @@ const likeController_1 = require("../controllers/likeController");
 const router = express_1.default.Router();
 router.post("/:id/likes", likeController_1.like);
 router.get("/:id/likes", likeController_1.getLikes);
+router.post("/:id/likes/:likeId", likeController_1.removeLike);
 exports.default = router;
