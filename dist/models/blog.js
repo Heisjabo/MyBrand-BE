@@ -16,7 +16,8 @@ const blogSchema = new mongoose_1.default.Schema({
     image: {
         type: String,
         required: false
-    }
+    },
+    comments: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Comment' }]
 });
 const Blog = mongoose_1.default.model("Blog", blogSchema);
 exports.default = Blog;
