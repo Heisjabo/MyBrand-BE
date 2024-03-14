@@ -7,10 +7,12 @@ const express_1 = __importDefault(require("express"));
 const blogRouter_1 = __importDefault(require("./blogRouter"));
 const commentRouter_1 = __importDefault(require("./commentRouter"));
 const likeRouter_1 = __importDefault(require("./likeRouter"));
+const querriesRouter_1 = __importDefault(require("./querriesRouter"));
 const mainRouter = express_1.default.Router();
 // const userRouter = require("./userRouter")
 mainRouter.use("/blogs", blogRouter_1.default);
 mainRouter.use("/blogs", commentRouter_1.default);
 mainRouter.use("/blogs", likeRouter_1.default);
+mainRouter.use("/", querriesRouter_1.default);
 // mainRouter.use("/users", userRouter)
 exports.default = mainRouter;
