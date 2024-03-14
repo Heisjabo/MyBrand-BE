@@ -1,7 +1,5 @@
 import uploadFile from "../helpers/cloud";
-import { Blog } from "../helpers/types";
 import { Request, Response } from "express";
-import cloudinary from "../helpers/cloud";
 import { getBlog, newBlog, getSingleBlog, deleteBlogById } from "../services/blogService";
 
 export const createBlog = async (req: Request, res: Response) => {
