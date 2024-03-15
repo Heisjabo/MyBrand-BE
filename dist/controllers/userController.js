@@ -46,7 +46,6 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(201).json({
             status: "success",
             message: "User was created successfully!",
-            data: newUser
         });
     }
     catch (err) {
@@ -107,7 +106,20 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.deleteUser = deleteUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield (0, userService_1.editUser)(req.params.id, req.body);
+        const { error, value } = validations_1.updateUserSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
+                status: 'Error',
+                message: error.details[0].message,
+            });
+        }
+        if (!value.name && !value.password && !value.role) {
+            return res.status(400).json({
+                status: "Error",
+                message: "Please add any field to update"
+            });
+        }
+        const user = yield (0, userService_1.editUser)(req.params.id, value);
         res.status(201).json({
             status: "success",
             message: "user updated successfully!",
@@ -143,7 +155,6 @@ const authUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 status: "success",
                 message: "you are logged in",
                 token: jsonwebtoken_1.default.sign({ userId: user._id }, secret, { expiresIn: "1d" }),
-                user: user
             });
         }
         else {

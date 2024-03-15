@@ -6,7 +6,7 @@ import {
   getSingleBlog,
   deleteBlogById,
 } from "../services/blogService";
-import { blogSchema } from "../utils/validations";
+import { blogSchema, updateBlogSchema } from "../utils/validations";
 
 export const createBlog = async (req: Request, res: Response) => {
     const file: any = req.file;
@@ -102,7 +102,19 @@ export const deleteBlog = async (req: Request, res: Response) => {
 };
 
 export const updateBlog = async (req: Request, res: Response) => {
-  try {
+  const file: any = req.file;
+    try {
+      const { error, value } = updateBlogSchema.validate({
+        title: req.body.title,
+        description: req.body.description,
+        image: file ? file.path : undefined,
+      });
+      if (error) {
+        return res.status(400).json({
+          status: "Error",
+          message: error.details[0].message,
+        });
+      }
     const blog: any = await getSingleBlog(req.params.id);
     if (!blog) {
       res.status(404).json({
@@ -112,25 +124,31 @@ export const updateBlog = async (req: Request, res: Response) => {
       return;
     }
 
-    if (req.body.title) {
-      blog.title = req.body.title;
+    if (value.title) {
+      blog.title = value.title;
     }
 
-    if (req.body.description) {
-      blog.description = req.body.description;
+    if (value.description) {
+      blog.description = value.description;
     }
 
     if (req.file) {
       const result = await uploadFile(req.file, res);
       blog.image = result;
     }
-
+    if(!value.title && !value.description && !req.file){
+      return res.status(400).json({
+        status: "Error",
+        message: "please add any field to update"
+      })
+    }
     await blog.save();
     res.status(200).json({
       status: "success",
       message: "Blog was updated successfully!",
       blog,
     });
+    
   } catch (error: any) {
     res.status(400).json({
       status: "error",

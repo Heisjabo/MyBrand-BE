@@ -113,7 +113,19 @@ const deleteBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteBlog = deleteBlog;
 const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const file = req.file;
     try {
+        const { error, value } = validations_1.updateBlogSchema.validate({
+            title: req.body.title,
+            description: req.body.description,
+            image: file ? file.path : undefined,
+        });
+        if (error) {
+            return res.status(400).json({
+                status: "Error",
+                message: error.details[0].message,
+            });
+        }
         const blog = yield (0, blogService_1.getSingleBlog)(req.params.id);
         if (!blog) {
             res.status(404).json({
@@ -122,15 +134,21 @@ const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             });
             return;
         }
-        if (req.body.title) {
-            blog.title = req.body.title;
+        if (value.title) {
+            blog.title = value.title;
         }
-        if (req.body.description) {
-            blog.description = req.body.description;
+        if (value.description) {
+            blog.description = value.description;
         }
         if (req.file) {
             const result = yield (0, cloud_1.default)(req.file, res);
             blog.image = result;
+        }
+        if (!value.title && !value.description && !req.file) {
+            return res.status(400).json({
+                status: "Error",
+                message: "please add any field to update"
+            });
         }
         yield blog.save();
         res.status(200).json({
