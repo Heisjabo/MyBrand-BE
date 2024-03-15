@@ -24,7 +24,7 @@ const commentSchema = new Schema<CommentModel>({
         type: Schema.Types.ObjectId,
         ref: 'Blog'
     }
-});
+}, { timestamps: true });
 
 const Comment = model<CommentModel>('Comment', commentSchema);
 

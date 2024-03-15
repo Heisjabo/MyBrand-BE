@@ -18,6 +18,6 @@ const commentSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Blog'
     }
-});
+}, { timestamps: true });
 const Comment = (0, mongoose_1.model)('Comment', commentSchema);
 exports.default = Comment;

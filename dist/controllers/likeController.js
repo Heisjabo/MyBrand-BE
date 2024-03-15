@@ -9,18 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeLike = exports.getLikes = exports.like = void 0;
+exports.getLikes = exports.like = void 0;
 const blogService_1 = require("../services/blogService");
 const likeService_1 = require("../services/likeService");
 const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
     try {
         const id = req.params.id;
-        const blog = yield (0, blogService_1.getSingleBlog)(id);
-        if (!blog) {
-            return res.status(404).json({ message: "Blog not found" });
+        const existingLike = yield (0, likeService_1.getSingleLike)(id, user._id);
+        if (existingLike) {
+            yield (0, likeService_1.dislike)(existingLike._id);
+            res.status(200).json({ status: "success", message: "Like removed successfully" });
         }
-        const Like = yield (0, likeService_1.createLike)(id, req.body.user);
-        res.status(200).json(Like);
+        else {
+            const blog = yield (0, blogService_1.getSingleBlog)(id);
+            if (!blog) {
+                return res.status(404).json({ status: "Error", message: "Blog not found" });
+            }
+            const Like = yield (0, likeService_1.createLike)(id, user._id);
+            res.status(200).json({
+                status: "success",
+                message: "your like was added",
+                data: Like
+            });
+        }
     }
     catch (error) {
         console.error(error);
@@ -42,19 +54,3 @@ const getLikes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getLikes = getLikes;
-const removeLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const like = yield (0, likeService_1.dislike)(req.params.likeId);
-        res.status(200).json({
-            status: "success",
-            message: "your like was removed!"
-        });
-    }
-    catch (err) {
-        res.status(400).json({
-            status: "Error",
-            message: err.message
-        });
-    }
-});
-exports.removeLike = removeLike;
