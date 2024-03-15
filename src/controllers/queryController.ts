@@ -1,12 +1,22 @@
 import { Request, Response } from "express"
 import { addQuerry, readQuerries, removeQuerry } from "../services/querryService"
+import { querySchema } from "../utils/validations";
 
-export const createQuerry = async (req: Request, res: Response) => {
+export const createQuery = async (req: Request, res: Response) => {
     try {
+        const { error, value } = await querySchema.validate(req.body);
+
+        if (error) {
+            return res.status(400).json({
+                status: "error",
+                message: error.details[0].message,
+            });
+        }
+        
         const query = await addQuerry({
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message
+            name: value.name,
+            email: value.email,
+            message: value.message
         });
         res.status(201).json({
             status: "success",

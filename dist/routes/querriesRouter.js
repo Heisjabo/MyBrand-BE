@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const querryController_1 = require("../controllers/querryController");
+const queryController_1 = require("../controllers/queryController");
 const router = express_1.default.Router();
-router.post("/querries", querryController_1.createQuerry);
-router.get("/querries", querryController_1.getQuerries);
-router.delete("/querries/:id", querryController_1.deleteQuerry);
+router.post("/querries", queryController_1.createQuery);
+router.get("/querries", queryController_1.getQuerries);
+router.delete("/querries/:id", queryController_1.deleteQuerry);
 exports.default = router;

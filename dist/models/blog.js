@@ -7,11 +7,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const blogSchema = new mongoose_1.default.Schema({
     title: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     image: {
         type: String,

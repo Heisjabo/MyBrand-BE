@@ -14,12 +14,9 @@ const likeSchema = new mongoose.Schema<likes>({
         ref: 'Blog'
     },
     user: {
-        type: String,
-        required: true
-    },
-    like:{
-        type: Boolean,
-        default: true
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 })
 

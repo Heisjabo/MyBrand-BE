@@ -1,9 +1,9 @@
 import express from "express"
-import { like, getLikes, removeLike } from "../controllers/likeController"
+import { like, getLikes } from "../controllers/likeController"
 const router = express.Router()
+import { authMiddleware } from "../middlewares/auth";
 
-router.post("/:id/likes", like);
+router.post("/:id/likes", authMiddleware, like);
 router.get("/:id/likes", getLikes);
-router.post("/:id/likes/:likeId", removeLike);
 
 export default router;

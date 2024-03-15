@@ -3,38 +3,49 @@ import { createUser, getUsers,checkUser, removeUser, editUser, getSingleUser } f
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { userSchema, authSchema } from "../utils/validations";
 dotenv.config();
 
 
 export const registerUser = async (req: Request, res: Response) => {
-    try{
-        const user = await checkUser(req.body.email);
-        if(user){
-            res.status(400).json({
+    try {
+        const { error, value } = userSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
                 status: "Error",
-                message: "user with this email already exists"
-            })
+                message: error.details[0].message
+            });
+        }
+
+        const user = await checkUser(value.email);
+        if (user) {
+            return res.status(400).json({
+                status: "Error",
+                message: "User with this email already exists"
+            });
         }
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const hashedPassword = await bcrypt.hash(value.password, salt);
+
         const newUser = await createUser({
-            name: req.body.name,
-            email: req.body.email,
+            name: value.name,
+            email: value.email,
             password: hashedPassword,
-            role: req.body.role
+            role: value.role
         });
+
         res.status(201).json({
             status: "success",
-            message: "user was created successfully!",
+            message: "User was created successfully!",
             data: newUser
-        })
-    } catch(err: any){
+        });
+    } catch (err: any) {
         res.status(400).json({
             status: "Error",
             message: err.message
-        })
+        });
     }
-}
+};
 
 export const getAllUsers = async (req: Request, res: Response) => {
     try{
@@ -83,12 +94,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
     try{
-        const user = await editUser(req.params.id, {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
-        });
+        const user = await editUser(req.params.id, req.body);
         res.status(201).json({
             status: "success",
             message: "user updated successfully!",
@@ -103,7 +109,14 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const authUser = async (req: Request, res: Response) => {
     try{
-        const user = await checkUser(req.body.email);
+        const { error, value } = authSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
+                status: "Error",
+                message: error.details[0].message
+            });
+        }
+        const user = await checkUser(value.email);
         if(!user){
             res.status(404).json({
                 status: "Error",

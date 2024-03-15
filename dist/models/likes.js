@@ -11,12 +11,9 @@ const likeSchema = new mongoose_1.default.Schema({
         ref: 'Blog'
     },
     user: {
-        type: String,
-        required: true
-    },
-    like: {
-        type: Boolean,
-        default: true
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 });
 exports.default = mongoose_1.default.model('Likes', likeSchema);
