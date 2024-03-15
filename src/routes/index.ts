@@ -3,13 +3,14 @@ import blogRouter from "./blogRouter";
 import commentRouter from "./commentRouter";
 import likeRouter from "./likeRouter";
 import querriesRouter from "./querriesRouter";
+import userRouter from "./userRouter";
 const mainRouter = express.Router();
-// const userRouter = require("./userRouter")
+
 
 mainRouter.use("/blogs", blogRouter);
 mainRouter.use("/blogs", commentRouter);
 mainRouter.use("/blogs", likeRouter);
 mainRouter.use("/", querriesRouter);
-// mainRouter.use("/users", userRouter)
+mainRouter.use("/users", userRouter);
 
 export default mainRouter;
