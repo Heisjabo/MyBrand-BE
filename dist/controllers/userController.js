@@ -17,27 +17,35 @@ const userService_1 = require("../services/userService");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const validations_1 = require("../utils/validations");
 dotenv_1.default.config();
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield (0, userService_1.checkUser)(req.body.email);
-        if (user) {
-            res.status(400).json({
+        const { error, value } = validations_1.userSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
                 status: "Error",
-                message: "user with this email already exists"
+                message: error.details[0].message
+            });
+        }
+        const user = yield (0, userService_1.checkUser)(value.email);
+        if (user) {
+            return res.status(400).json({
+                status: "Error",
+                message: "User with this email already exists"
             });
         }
         const salt = yield bcryptjs_1.default.genSalt(10);
-        const hashedPassword = yield bcryptjs_1.default.hash(req.body.password, salt);
+        const hashedPassword = yield bcryptjs_1.default.hash(value.password, salt);
         const newUser = yield (0, userService_1.createUser)({
-            name: req.body.name,
-            email: req.body.email,
+            name: value.name,
+            email: value.email,
             password: hashedPassword,
-            role: req.body.role
+            role: value.role
         });
         res.status(201).json({
             status: "success",
-            message: "user was created successfully!",
+            message: "User was created successfully!",
             data: newUser
         });
     }
@@ -99,12 +107,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.deleteUser = deleteUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield (0, userService_1.editUser)(req.params.id, {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
-        });
+        const user = yield (0, userService_1.editUser)(req.params.id, req.body);
         res.status(201).json({
             status: "success",
             message: "user updated successfully!",
@@ -120,7 +123,14 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.updateUser = updateUser;
 const authUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield (0, userService_1.checkUser)(req.body.email);
+        const { error, value } = validations_1.authSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
+                status: "Error",
+                message: error.details[0].message
+            });
+        }
+        const user = yield (0, userService_1.checkUser)(value.email);
         if (!user) {
             res.status(404).json({
                 status: "Error",

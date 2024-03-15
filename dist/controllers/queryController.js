@@ -11,12 +11,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteQuerry = exports.getQuerries = exports.createQuery = void 0;
 const querryService_1 = require("../services/querryService");
+const validations_1 = require("../utils/validations");
 const createQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { error, value } = yield validations_1.querySchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({
+                status: "error",
+                message: error.details[0].message,
+            });
+        }
         const query = yield (0, querryService_1.addQuerry)({
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message
+            name: value.name,
+            email: value.email,
+            message: value.message
         });
         res.status(201).json({
             status: "success",
