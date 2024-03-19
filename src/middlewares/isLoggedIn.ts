@@ -13,7 +13,7 @@ declare global {
     }
 }
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
     let token: string | undefined = undefined;
     try{
         if (
@@ -23,8 +23,8 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
             token = req.headers.authorization.split(" ")[1];
         }
         if (!token) {
-            res.status(401).json({
-                status: "failed",
+            return res.status(401).json({
+                status: "Unauthorized",
                 message: "You are not logged in. Please login to continue.",
             });
         }
@@ -38,15 +38,15 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         const decoded: any = jwt.verify(token, secret);
         const loggedUser: UserType = await getSingleUser(decoded.userId);
         if (!loggedUser) {
-            res.status(401).json({
-                status: "failed",
+            return res.status(401).json({
+                status: "Unauthorized",
                 message: "Token has expired. Please login again.",
             });
         }
         req.user = loggedUser;
         next();
     } catch (error: any) {
-        res.status(401).json({
+        return res.status(401).json({
             status: "failed",
             error: error.message + " Token has expired. Please login again.",
         });
