@@ -2,6 +2,7 @@ import mainRouter from "./routes/index";
 import express, { Request, Response} from "express"
 import morgan from "morgan"
 import cors from "cors";
+import docRouter from "./docs/swagger";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,8 @@ app.get("/", (req: Request, res: Response) => {
         message: "Welcome to my brand backend"
     })
 });
+
+app.use("/docs", docRouter);
 
 app.use("/api/v1", mainRouter);
 

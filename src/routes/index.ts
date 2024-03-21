@@ -2,7 +2,7 @@ import express from "express";
 import blogRouter from "./blogRouter";
 import commentRouter from "./commentRouter";
 import likeRouter from "./likeRouter";
-import querriesRouter from "./querriesRouter";
+import querriesRouter from "./queriesRouter";
 import userRouter from "./userRouter";
 const mainRouter = express.Router();
 

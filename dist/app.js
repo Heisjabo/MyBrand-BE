@@ -7,6 +7,7 @@ const index_1 = __importDefault(require("./routes/index"));
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
+const swagger_1 = __importDefault(require("./docs/swagger"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
         message: "Welcome to my brand backend"
     });
 });
+app.use("/docs", swagger_1.default);
 app.use("/api/v1", index_1.default);
 app.use("*", (req, res) => {
     res.status(404).json({
