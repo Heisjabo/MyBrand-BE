@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const connect = yield mongoose_1.default.connect(process.env.MONGO_URI);
+        const connect = yield mongoose_1.default.connect(`${process.env.MONGO_URI}`);
         console.log("mongodb connected!");
     }
     catch (err) {
