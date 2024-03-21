@@ -149,7 +149,7 @@ export const authUser = async (req: Request, res: Response) => {
             })
         }
     } catch(err: any){
-        res.status(500).json({
+        res.status(400).json({
             status: "Error",
             message: err.message
         })

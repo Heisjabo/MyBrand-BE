@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
-import { createBlog, getBlogs, getBlogById, updateBlog, deleteBlog } from "../controllers/blogController.js";
-import upload from "../helpers/multer.js";
-import { isAdmin } from "../middlewares/isAdmin.js";
-import { isLoggedIn } from "../middlewares/isLoggedIn.js";
+import { createBlog, getBlogs, getBlogById, updateBlog, deleteBlog } from "../controllers/blogController";
+import upload from "../helpers/multer";
+import { isAdmin } from "../middlewares/isAdmin";
+import { isLoggedIn } from "../middlewares/isLoggedIn";
 
 router.get("/", getBlogs);
 router.post("/", isLoggedIn, isAdmin, upload.single("image"), createBlog);

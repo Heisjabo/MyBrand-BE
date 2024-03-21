@@ -165,7 +165,7 @@ const authUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (err) {
-        res.status(500).json({
+        res.status(400).json({
             status: "Error",
             message: err.message
         });

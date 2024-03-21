@@ -12,8 +12,7 @@ const blogSchema = new mongoose.Schema({
     image: {
         type: String,
         required: false
-    },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+    }
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
