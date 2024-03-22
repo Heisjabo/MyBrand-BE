@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && nodemon dist/server.js",
-    "test": "jest --detectOpenHandles --coverage --coverageReporters=text-summary"
+    "test": "jest --detectOpenHandles --coverage"
   },
   "keywords": [],
   "author": "",
