@@ -3,10 +3,11 @@ name: My Brand
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
-      - main
+      - develop
+
 jobs:
   jobs1:
     runs-on: ubuntu-latest
