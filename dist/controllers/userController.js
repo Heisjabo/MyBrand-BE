@@ -43,13 +43,13 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             password: hashedPassword,
             role: value.role
         });
-        res.status(201).json({
+        return res.status(201).json({
             status: "success",
             message: "User was created successfully!",
         });
     }
     catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             status: "Error",
             message: err.message
         });
@@ -144,28 +144,28 @@ const authUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const user = yield (0, userService_1.checkUser)(value.email);
         if (!user) {
-            res.status(404).json({
+            return res.status(404).json({
                 status: "Error",
                 message: "user not found"
             });
         }
         const secret = process.env.JWT_SECRET;
         if (user && (yield bcryptjs_1.default.compare(req.body.password, user.password))) {
-            res.status(200).json({
+            return res.status(200).json({
                 status: "success",
                 message: "you are logged in",
                 token: jsonwebtoken_1.default.sign({ userId: user._id }, secret, { expiresIn: "1d" }),
             });
         }
         else {
-            res.status(401).json({
+            return res.status(401).json({
                 status: "Error",
                 message: "Incorrect password"
             });
         }
     }
     catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             status: "Error",
             message: err.message
         });

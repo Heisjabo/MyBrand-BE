@@ -36,14 +36,14 @@ const createBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             description: value.description,
             image: result,
         });
-        res.status(200).json({
+        return res.status(201).json({
             status: "success",
             message: "Blog was created successfully!",
             data: blog,
         });
     }
     catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             status: "error",
             error: error.message,
         });

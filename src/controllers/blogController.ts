@@ -28,13 +28,13 @@ export const createBlog = async (req: Request, res: Response) => {
         description: value.description,
         image: result,
       });
-      res.status(200).json({
+      return res.status(201).json({
         status: "success",
         message: "Blog was created successfully!",
         data: blog,
       });
     } catch (error: any) {
-      res.status(400).json({
+      return res.status(400).json({
         status: "error",
         error: error.message,
       });

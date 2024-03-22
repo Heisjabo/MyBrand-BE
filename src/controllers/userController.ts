@@ -34,12 +34,12 @@ export const registerUser = async (req: Request, res: Response) => {
             role: value.role
         });
 
-        res.status(201).json({
+        return res.status(201).json({
             status: "success",
             message: "User was created successfully!",
         });
     } catch (err: any) {
-        res.status(400).json({
+        return res.status(400).json({
             status: "Error",
             message: err.message
         });
@@ -130,26 +130,26 @@ export const authUser = async (req: Request, res: Response) => {
         }
         const user = await checkUser(value.email);
         if(!user){
-            res.status(404).json({
+            return res.status(404).json({
                 status: "Error",
                 message: "user not found"
             });
         }
         const secret: any = process.env.JWT_SECRET;
         if(user && await bcrypt.compare(req.body.password, user.password)){
-            res.status(200).json({
+            return res.status(200).json({
                 status: "success",
                 message: "you are logged in",
                 token: jwt.sign({ userId: user._id }, secret, { expiresIn: "1d"}),
             });
         } else {
-            res.status(401).json({
+            return res.status(401).json({
                 status: "Error",
                 message: "Incorrect password"
             })
         }
     } catch(err: any){
-        res.status(400).json({
+        return res.status(400).json({
             status: "Error",
             message: err.message
         })
