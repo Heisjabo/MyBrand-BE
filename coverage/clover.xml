@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1711119500636" clover="3.2.0">
-  <project timestamp="1711119500637" name="All files">
-    <metrics statements="1031" coveredstatements="652" conditionals="457" coveredconditionals="270" methods="281" coveredmethods="102" elements="1769" coveredelements="1024" complexity="0" loc="1031" ncloc="1031" packages="18" files="56" classes="56"/>
+<coverage generated="1711122494186" clover="3.2.0">
+  <project timestamp="1711122494187" name="All files">
+    <metrics statements="1031" coveredstatements="647" conditionals="457" coveredconditionals="271" methods="281" coveredmethods="100" elements="1769" coveredelements="1018" complexity="0" loc="1031" ncloc="1031" packages="18" files="56" classes="56"/>
     <package name="dist">
       <metrics statements="20" coveredstatements="19" conditionals="7" coveredconditionals="7" methods="3" coveredmethods="2"/>
       <file name="app.js" path="C:\Users\Jabo\Desktop\MyBrand-BE\dist\app.js">
@@ -762,7 +762,7 @@
       </file>
     </package>
     <package name="src.controllers">
-      <metrics statements="176" coveredstatements="62" conditionals="36" coveredconditionals="6" methods="36" coveredmethods="10"/>
+      <metrics statements="176" coveredstatements="59" conditionals="36" coveredconditionals="7" methods="36" coveredmethods="10"/>
       <file name="blogController.ts" path="C:\Users\Jabo\Desktop\MyBrand-BE\src\controllers\blogController.ts">
         <metrics statements="56" coveredstatements="16" conditionals="16" coveredconditionals="2" methods="10" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
@@ -895,7 +895,7 @@
         <line num="58" count="0" type="stmt"/>
       </file>
       <file name="userController.ts" path="C:\Users\Jabo\Desktop\MyBrand-BE\src\controllers\userController.ts">
-        <metrics statements="57" coveredstatements="33" conditionals="13" coveredconditionals="4" methods="12" coveredmethods="6"/>
+        <metrics statements="57" coveredstatements="30" conditionals="13" coveredconditionals="5" methods="12" coveredmethods="6"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -908,12 +908,12 @@
         <line num="13" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="14" count="0" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
+        <line num="21" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
         <line num="50" count="1" type="stmt"/>
@@ -1160,7 +1160,7 @@
       </file>
     </package>
     <package name="src.services">
-      <metrics statements="65" coveredstatements="35" conditionals="2" coveredconditionals="0" methods="38" coveredmethods="10"/>
+      <metrics statements="65" coveredstatements="33" conditionals="2" coveredconditionals="0" methods="38" coveredmethods="8"/>
       <file name="blogService.ts" path="C:\Users\Jabo\Desktop\MyBrand-BE\src\services\blogService.ts">
         <metrics statements="13" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
@@ -1216,11 +1216,11 @@
         <line num="15" count="0" type="stmt"/>
       </file>
       <file name="userService.ts" path="C:\Users\Jabo\Desktop\MyBrand-BE\src\services\userService.ts">
-        <metrics statements="23" coveredstatements="16" conditionals="2" coveredconditionals="0" methods="12" coveredmethods="8"/>
+        <metrics statements="23" coveredstatements="14" conditionals="2" coveredconditionals="0" methods="12" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
