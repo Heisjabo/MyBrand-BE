@@ -8,7 +8,7 @@ import User from "../models/user";
 
 
 beforeAll(async () => {
-    await mongoose.connect("mongodb+srv://jabo:rG7jMHY3wOjbpM6p@cluster0.hxzxy7h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+    await mongoose.connect(process.env.MONGO_URI_TEST as string);
   });
 
 afterAll(async () => {
