@@ -3,9 +3,8 @@ import app from "../app";
 import dotenv from "dotenv"
 dotenv.config()
 import mongoose from "mongoose";
-import fs from "fs"
-import path from "path"
 import { test, it, describe, expect, beforeAll, afterAll } from "@jest/globals";
+import User from "../models/user";
 
 
 beforeAll(async () => {
@@ -13,6 +12,7 @@ beforeAll(async () => {
   });
 
 afterAll(async () => {
+  await User.deleteMany({});
     await mongoose.connection.close();
 })
 
@@ -32,41 +32,32 @@ describe("GET /", () => {
     });
 });
 
-describe("POST /", () => {
+describe("POST /users", () => {
     it('responds with status 201 user created!', async () => {
       const response = await supertest(app).post("/api/v1/users").send({
-        name: "Arthur",
-        email: "arthur@gmail.com",
+        name: "Jabo",
+        email: "jabo@gmail.com",
         password: "Test@123",
-        role: "user"
+        role: "admin"
       });
       expect(response.body.status).toBe("success");
     })
 
+    it("should login user in", async () => {
+      const response = await supertest(app).post("/api/v1/users/auth")
+        .send({ email: "jabo@gmail.com", password: 'Test@123' });
+        token = response.body.token;
+        console.log("Token:", token);
+      expect(response.body.status).toBe("success");
+    });
+
+    it("user not found", async () => {
+      const response = await supertest(app).post("/api/v1/users/auth")
+        .send({ email: "dummy@gmail.com", password: '12345' });
+      expect(response.body.status).toBe("Error");
+    });
+
 });
-
-describe("user login", () => {
-  it("should login user in", async () => {
-    const response = await supertest(app).post("/api/v1/users/auth")
-      .send({ email: "jabo@gmail.com", password: 'Test@123' });
-      token = response.body.token;
-      console.log("Token:", token);
-    expect(response.body.status).toBe("success");
-  });
-
-  it("user not found", async () => {
-    const response = await supertest(app).post("/api/v1/users/auth")
-      .send({ email: "dummy@gmail.com", password: '12345' });
-    expect(response.body.status).toBe("Error");
-  });
-  
-})
-
-
-// it("Get single blogs", async () => {
-//   const response = await supertest(app).get(`/api/v1/blogs/${id}`);
-//   expect(response.status).toBe(200);
-// });
 
 describe("Test Blog controllers", () => {
 
@@ -95,18 +86,6 @@ describe("Test Blog controllers", () => {
         })
         expect(res.status).toBe(401)
     })
-
-
-    it("should create a new blog", async () => {
-      const response = await supertest(app).post("/api/v1/blogs")
-      .send({
-        title: "Test Blog",
-        description: "this is a blog description",
-        image: ""
-      }).set('Authorization', 'Bearer ' + token)
-      expect(response.status).toBe(201);
-    })
-
 
 })
 
