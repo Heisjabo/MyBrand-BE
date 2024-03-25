@@ -11,8 +11,8 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && nodemon dist/server.js",
-    "test": "jest --detectOpenHandles --coverage",
-    "coveralls": "jest ./src/tests/testing.test.ts --coverage --forceExit --detectOpenHandles  && cat ./coverage/lcov.info | coveralls"
+    "test": "jest --detectOpenHandles --coverage --forceExit",
+    "coveralls": "jest --coverage --forceExit --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
