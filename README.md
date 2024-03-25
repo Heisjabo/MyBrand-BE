@@ -1,6 +1,6 @@
 # MyBrand-BE
 
-[![codecov](https://codecov.io/gh/Heisjabo/MyBrand-BE/graph/badge.svg?token=NRLIKAGJ8E)](https://codecov.io/gh/Heisjabo/MyBrand-BE)
+[![Coverage Status](https://coveralls.io/repos/github/Heisjabo/MyBrand-BE/badge.svg?branch=develop)](https://coveralls.io/github/Heisjabo/MyBrand-BE?branch=develop)
 
 ## Description
 

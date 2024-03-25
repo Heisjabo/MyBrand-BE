@@ -2,29 +2,33 @@ name: My Brand
 
 on:
   push:
-    branches:
-      - develop
+    branches: [ "develop" ]
   pull_request:
-    branches:
-      - develop
+    branches: [ "develop" ]
 
 jobs:
-  jobs1:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/checkout@v2
+      
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "16.x"
+      
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
+      
       - name: Run Tests
         run: npm test
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: Heisjabo/MyBrand-BE
+      
+      - name: Install Coveralls package
+        run: npm install coveralls
+      
+      - name: Report coverage to Coveralls
+        run: npm run coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}

@@ -12,10 +12,12 @@ beforeAll(async () => {
   });
 
 afterAll(async () => {
+    await User.deleteMany({});
     await mongoose.connection.close();
 })
 
 let token: string;
+let userId: string;
 const id = "65f2ce85a186e2957a79fa9b"
 
 test("Test index route", async () => {
@@ -35,16 +37,15 @@ describe("POST /users", () => {
     it('responds with status 201 user created!', async () => {
       const response = await supertest(app).post("/api/v1/users").send({
         name: "Jabo",
-        email: "jabo@gmail.com",
+        email: "jabo2@gmail.com",
         password: "Test@123",
-        role: "admin"
       });
       expect(response.body.status).toBe("success");
     })
 
     it("should login user in", async () => {
       const response = await supertest(app).post("/api/v1/users/auth")
-        .send({ email: "jabo@gmail.com", password: 'Test@123' });
+        .send({ email: "jabo2@gmail.com", password: 'Test@123' });
         token = response.body.token;
         console.log("Token:", token);
       expect(response.body.status).toBe("success");
