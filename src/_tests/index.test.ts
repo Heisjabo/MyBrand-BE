@@ -5,6 +5,9 @@ dotenv.config()
 import mongoose from "mongoose";
 import { test, it, describe, expect, beforeAll, afterAll } from "@jest/globals";
 import User from "../models/user";
+import fs from "fs";
+import path from "path";
+import Blog from "../models/blog";
 
 
 beforeAll(async () => {
@@ -17,8 +20,6 @@ afterAll(async () => {
 })
 
 let token: string;
-let userId: string;
-const id = "65f2ce85a186e2957a79fa9b"
 
 test("Test index route", async () => {
   const response = await supertest(app).get("/");
@@ -48,7 +49,6 @@ describe("POST /users", () => {
       const response = await supertest(app).post("/api/v1/users/auth")
         .send({ email: "jabo@gmail.com", password: 'Test@123' });
         token = response.body.token;
-        console.log("Token:", token);
       expect(response.body.status).toBe("success");
     });
 
@@ -60,14 +60,16 @@ describe("POST /users", () => {
 
 });
 
+
+
 describe("Test Blog controllers", () => {
 
     it("should return all blogs", async () => {
         const response = await supertest(app).get("/api/v1/blogs");
         expect(response.status).toBe(200);
-    })
+    });
 
-    test("Without title field", async () => {
+    it("should return error 400 when Without title field", async () => {
       const res = await supertest(app)
         .post('/api/v1/blogs')
         .send({
@@ -87,6 +89,24 @@ describe("Test Blog controllers", () => {
         })
         expect(res.status).toBe(401)
     })
+
+    // const filePath = path.join(__dirname, "testImg.jpg");
+    // console.log(filePath);
+    //   if (!fs.existsSync(filePath)) {
+    //      throw new Error("Test image file not found");
+    //   }
+
+    // it("should create a new blog", async () => {
+    //   const response = await supertest(app)
+    //   .post("/api/v1/blogs")
+    //   .set('Authorization', 'Bearer ' + token)
+    //   .field("title", "New Blog")
+    //   .field("description", "This is a blog description")
+    //   .attach("image", filePath)
+    //   expect(response.body.status).toBe("success")
+    // }, 10000)
+
+
 
 })
 
