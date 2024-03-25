@@ -37,15 +37,16 @@ describe("POST /users", () => {
     it('responds with status 201 user created!', async () => {
       const response = await supertest(app).post("/api/v1/users").send({
         name: "Jabo",
-        email: "jabo2@gmail.com",
+        email: "jabo@gmail.com",
         password: "Test@123",
+        role: "admin"
       });
       expect(response.body.status).toBe("success");
     })
 
     it("should login user in", async () => {
       const response = await supertest(app).post("/api/v1/users/auth")
-        .send({ email: "jabo2@gmail.com", password: 'Test@123' });
+        .send({ email: "jabo@gmail.com", password: 'Test@123' });
         token = response.body.token;
         console.log("Token:", token);
       expect(response.body.status).toBe("success");
