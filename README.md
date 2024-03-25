@@ -1,5 +1,7 @@
 # MyBrand-BE
 
+[![codecov](https://codecov.io/gh/Heisjabo/MyBrand-BE/graph/badge.svg?token=NRLIKAGJ8E)](https://codecov.io/gh/Heisjabo/MyBrand-BE)
+
 ## Description
 
 MyBrand-BE serves as the backend for the MyBrand project. It handles the server-side logic and database operations using Node.js and Express. MongoDB is utilized as the database to store and manage data related to the project.
