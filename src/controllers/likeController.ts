@@ -18,7 +18,7 @@ export const like = async (req: Request, res: Response) => {
         return res.status(404).json({ status: "Error", message: "Blog not found" });
       }
       const Like = await createLike(id, user._id);
-      res.status(200).json({
+      res.status(201).json({
         status: "success",
         message: "your like was added",
         data: Like

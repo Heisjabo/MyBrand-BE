@@ -89,7 +89,7 @@ export const deleteBlog = async (req: Request, res: Response) => {
         message: "Blog not found",
       });
     }
-    return res.status(200).json({
+    return res.status(204).json({
       status: "success",
       message: "Blog deleted successfully",
     });
