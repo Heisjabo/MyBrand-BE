@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addQuerry, readQuerries, removeQuerry } from "../services/querryService"
+import { addQuerry, readQuerries, removeQuerry, getQueryById } from "../services/querryService"
 import { querySchema } from "../utils/validations";
 
 export const createQuery = async (req: Request, res: Response) => {
@@ -50,12 +50,18 @@ export const getQuerries = async (req: Request, res: Response) => {
 export const deleteQuerry = async (req: Request, res: Response) => {
     try{
         const querry = await removeQuerry(req.params.id);
-        res.status(204).json({
+        if(!querry){
+            return res.status(404).json({
+                status: "Error",
+                message: "Query Not Found"
+            })
+        }
+        return res.status(200).json({
             status: "success",
             message: "querry deleted successfully!"
         })
     } catch(err: any){
-        res.status(500).json({
+        return res.status(400).json({
             status: "Error",
             error: err.message
         })
