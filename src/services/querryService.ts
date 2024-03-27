@@ -12,5 +12,13 @@ export const readQuerries = async () => {
 }
 
 export const removeQuerry = async (id: string) => {
-    const querry = await Querry.findByIdAndDelete(id);
+    const query = await Querry.findByIdAndDelete(id);
+    return query;
+}
+
+export const getQueryById = async (id: string) => {
+    const query = await Querry.findById(id);
+    if(!query){
+        throw new Error("Query not found");
+    }
 }

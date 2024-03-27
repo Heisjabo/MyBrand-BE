@@ -584,11 +584,14 @@ const options = {
             },
           ],
           responses: {
-            204: {
-              description: "No Content",
+            200: {
+              description: "Success",
             },
             404: {
               description: "Not Found",
+            },
+            400: {
+              description: "Bad Request",
             },
           },
         },
