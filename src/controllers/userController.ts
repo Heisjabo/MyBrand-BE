@@ -141,6 +141,7 @@ export const authUser = async (req: Request, res: Response) => {
                 status: "success",
                 message: "you are logged in",
                 token: jwt.sign({ userId: user._id }, secret, { expiresIn: "1d"}),
+                role: user.role
             });
         } else {
             return res.status(401).json({
